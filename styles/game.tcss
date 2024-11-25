@@ -1,0 +1,15 @@
+GameScreen {
+    align: center middle;
+    background: black;
+}
+
+#tile_grid {
+    grid-size: 10 6;
+    grid-gutter: 0;
+    width: 30;
+    height: 18;
+}
+
+PauseScreen {
+    align: center middle;
+}
