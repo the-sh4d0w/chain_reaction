@@ -13,7 +13,7 @@ class StartMenuScreen(textual.screen.Screen):
         """Compose the ui."""
         yield textual.widgets.Label("Chain Reaction")
         yield textual.widgets.Button("Start", id="start_button")
-        yield textual.widgets.Button("Option", id="option_button")
+        yield textual.widgets.Button("Options", id="option_button")
         yield textual.widgets.Button("Quit", id="quit_button")
 
     @textual.on(textual.widgets.Button.Pressed, "#start_button")

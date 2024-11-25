@@ -1,4 +1,4 @@
-"""Config."""
+"""Config util."""
 
 import pathlib
 
@@ -9,8 +9,8 @@ import pydantic_core
 class Config(pydantic.BaseModel):
     """Config representation."""
     language: str = pydantic.Field(default="en", pattern="^[a-z]{2}$")
-    field_height: int = 6
     field_width: int = 10
+    field_height: int = 6
     player1_colour: str = pydantic.Field(default="#FF0000",
                                          pattern="^#[0-9a-fA-F]{6}$")
     player2_colour: str = pydantic.Field(default="#00FF00",
@@ -27,6 +27,12 @@ class Config(pydantic.BaseModel):
                                          pattern="^#[0-9a-fA-F]{6}$")
     player8_colour: str = pydantic.Field(default="#FFFFFF",
                                          pattern="^#[0-9a-fA-F]{6}$")
+
+    @property
+    def colours(self) -> list[str]:
+        """Player colours."""
+        return [self.player1_colour, self.player2_colour, self.player3_colour, self.player4_colour,
+                self.player5_colour, self.player6_colour, self.player7_colour, self.player8_colour]
 
     @classmethod
     def load(cls) -> "Config":

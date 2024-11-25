@@ -1,6 +1,6 @@
 .tile {
     background: black;
-    border: double $primary;
+    border: solid $primary;
     width: auto;
     height: auto;
 }

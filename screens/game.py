@@ -19,7 +19,7 @@ class PauseScreen(textual.screen.ModalScreen):
         """Compose the ui."""
         yield textual.widgets.Label("Pause Menu")
         yield textual.widgets.Button("Resume", id="resume_button")
-        yield textual.widgets.Button("Option", id="option_button")
+        yield textual.widgets.Button("Options", id="option_button")
         # TODO: popup to confirm
         yield textual.widgets.Button("Back to Main Menu", id="close_button")
 
@@ -60,6 +60,6 @@ class GameScreen(textual.screen.Screen):
     def compose(self) -> textual.app.ComposeResult:
         """Compose the ui."""
         with textual.containers.Grid(id="tile_grid"):
-            for _ in range(utils.config.CONFIG.field_width
+            for i in range(utils.config.CONFIG.field_width
                            * utils.config.CONFIG.field_height):
-                yield widgets.tile.Tile()
+                yield widgets.tile.Tile(i)
