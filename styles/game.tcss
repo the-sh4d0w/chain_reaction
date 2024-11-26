@@ -1,7 +1,3 @@
-GameScreen {
-    background: black;
-}
-
 #tile_grid {
     grid-size: 10 6;
     grid-gutter: 0;

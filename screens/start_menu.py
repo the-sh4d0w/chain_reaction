@@ -5,13 +5,24 @@ import textual.containers
 import textual.screen
 import textual.widgets
 
+TITLE = r"""
+ $$$$$$\  $$\                 $$\                 $$$$$$$\                                  $$\     $$\
+$$  __$$\ $$ |                \__|                $$  __$$\                                 $$ |    \__|
+$$ /  \__|$$$$$$$\   $$$$$$\  $$\ $$$$$$$\        $$ |  $$ | $$$$$$\   $$$$$$\   $$$$$$$\ $$$$$$\   $$\  $$$$$$\  $$$$$$$\
+$$ |      $$  __$$\  \____$$\ $$ |$$  __$$\       $$$$$$$  |$$  __$$\  \____$$\ $$  _____|\_$$  _|  $$ |$$  __$$\ $$  __$$\
+$$ |      $$ |  $$ | $$$$$$$ |$$ |$$ |  $$ |      $$  __$$< $$$$$$$$ | $$$$$$$ |$$ /        $$ |    $$ |$$ /  $$ |$$ |  $$ |
+$$ |  $$\ $$ |  $$ |$$  __$$ |$$ |$$ |  $$ |      $$ |  $$ |$$   ____|$$  __$$ |$$ |        $$ |$$\ $$ |$$ |  $$ |$$ |  $$ |
+\$$$$$$  |$$ |  $$ |\$$$$$$$ |$$ |$$ |  $$ |      $$ |  $$ |\$$$$$$$\ \$$$$$$$ |\$$$$$$$\   \$$$$  |$$ |\$$$$$$  |$$ |  $$ |
+ \______/ \__|  \__| \_______|\__|\__|  \__|      \__|  \__| \_______| \_______| \_______|   \____/ \__| \______/ \__|  \__|
+"""
+
 
 class StartMenuScreen(textual.screen.Screen):
     """Start menu screen."""
 
     def compose(self) -> textual.app.ComposeResult:
         """Compose the ui."""
-        yield textual.widgets.Label("Chain Reaction")
+        yield textual.widgets.Label(TITLE)
         yield textual.widgets.Button("Start", id="start_button")
         yield textual.widgets.Button("Options", id="option_button")
         yield textual.widgets.Button("Quit", id="quit_button")

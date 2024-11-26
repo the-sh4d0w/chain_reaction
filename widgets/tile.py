@@ -16,6 +16,7 @@ class Tile(textual.widgets.Button):
         super().__init__(classes="tile")
         self.atoms: int = 0
         self.owner: int = -1
+        # self.added: bool = False
         self.x = count % utils.config.CONFIG.field_width
         self.y = count // utils.config.CONFIG.field_width
         self.TILES[self.y].append(self)
@@ -62,22 +63,38 @@ class Tile(textual.widgets.Button):
         """
         return bool(self.left()) + bool(self.right()) + bool(self.top()) + bool(self.bottom())
 
-    def add(self, owner: int) -> None:
-        """Add one atom."""
-        self.atoms += 1
-        self.owner = owner
-        if self.atoms == self.limit():
-            self.atoms = 0
-            self.owner = -1
-            if self.left() is not None:
-                self.left().add(owner)  # type: ignore
-            if self.right() is not None:
-                self.right().add(owner)  # type: ignore
-            if self.top() is not None:
-                self.top().add(owner)  # type: ignore
-            if self.bottom() is not None:
-                self.bottom().add(owner)  # type: ignore
-        self.refresh()
+    def loop(self) -> bool:
+        """Loop over all tiles."""
+        # add mark
+        marked: list[Tile] = []
+        for row in self.TILES:
+            for tile in row:
+                if tile.atoms >= tile.limit():
+                    marked.append(tile)
+        if len(marked) > 0:
+            for tile in marked:
+                tile.atoms %= tile.limit()
+                tile.refresh()
+                if tile.left() is not None:
+                    tile.left().atoms += 1  # type: ignore
+                    tile.left().owner = tile.owner  # type: ignore
+                if tile.right() is not None:
+                    tile.right().atoms += 1  # type: ignore
+                    tile.right().owner = tile.owner  # type: ignore
+                if tile.top() is not None:
+                    tile.top().atoms += 1  # type: ignore
+                    tile.top().owner = tile.owner  # type: ignore
+                if tile.bottom() is not None:
+                    tile.bottom().atoms += 1  # type: ignore
+                    tile.bottom().owner = tile.owner  # type: ignore
+                if tile.atoms == 0:
+                    tile.owner = -1
+            # for row in self.TILES:
+            #     for tile in row:
+            #         tile.added = False
+            return True
+        else:
+            return False
 
     def render(self) -> str:
         """Render content."""
@@ -88,6 +105,10 @@ class Tile(textual.widgets.Button):
         """Handle on button pressed."""
         event.stop()
         if self.owner in (-1, utils.game_state.STATE.current_player):
-            self.add(utils.game_state.STATE.current_player)
+            self.atoms += 1
+            self.owner = utils.game_state.STATE.current_player
+            again = True
+            while again:
+                again = self.loop()
             utils.game_state.STATE.next()
             self.app.theme = f"player{utils.game_state.STATE.current_player}"

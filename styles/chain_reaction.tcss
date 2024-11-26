@@ -1,3 +1,7 @@
 Screen {
     align: center middle;
 }
+
+Button {
+    border: none;
+}
